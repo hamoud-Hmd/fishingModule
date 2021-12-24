@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_details_lines_tree" model="ir.ui.view">
+        <field name="name">details.lines.tree</field>
+        <field name="model">details.lines</field>
+        <field name="arch" type="xml">
+            <tree create="false" string="treatment_tree">
+                <field name="category"/>
+                <field name="qty"/>
+                <field name="quality"/>
+                <field name="state"/>
+                <button name="action_start_treatment" string="Start Treatment" class="btn-primary" type="object"
+                        states="to_treat"/>
+                <button name="action_end_treatment" string="Validate Treatment" class="btn-primary" type="object"
+                        states="in_treatment"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <record id="view_details_lines_search" model="ir.ui.view">
+        <field name="name">details.lines.search</field>
+        <field name="model">details.lines</field>
+        <field name="arch" type="xml">
+            <search string="Contributions">
+                <!--search by name and note  -->
+
+                <!--End search by name and note -->
+                <separator/>
+
+                <!--begin Group By -->
+                <filter string="Category" name="category" context="{'group_by': 'category'}"/>
+                <!--end Group By -->
+            </search>
+        </field>
+    </record>
+
+    <record id="view_details_lines_form" model="ir.ui.view">
+        <field name="name">details.lines.form</field>
+        <field name="model">details.lines</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="category" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="quality" invisible="context.get('hide_quality')"/>
+                        </group>
+                        <group>
+                            <field name="qty" invisible="context.get('hide_gender')"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="start_treatment_date" attrs="{'invisible': [('start_treatment_date','=', False)]}"/>
+                            <field name="end_treatment_date" attrs="{'invisible': [('end_treatment_date','=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="start_tunnel_date" attrs="{'invisible': [('start_tunnel_date','=', False)]}"/>
+                            <field name="end_tunnel_date" attrs="{'invisible': [('end_tunnel_date','=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="start_packing_date" attrs="{'invisible': [('start_packing_date','=', False)]}"/>
+                            <field name="end_packing_date" attrs="{'invisible': [('end_packing_date','=', False)]}"/>
+                        </group>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_fishing_treatment" model="ir.actions.act_window">
+        <field name="name">Quantities to be treated</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">details.lines</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_category':0, 'hide_quality': 0}</field>
+        <field name="domain">[('quality', '=', 'good_quality'), ('state', 'in', ['to_treat', 'in_treatment'])]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Quantities to be treated
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_treatment"
+              name="Treatment"
+              parent="menu_fishing_root"
+              action="action_fishing_treatment"
+              sequence="10"/>
+
+
+</odoo>

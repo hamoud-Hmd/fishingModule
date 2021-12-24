@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+{
+    'name': 'Fish Processing',
+    'version': '1.0',
+    'author': 'Hamoud Hmd',
+    'summary': 'Fish Processing',
+    'sequence': -120,
+    'description': """Fish Processing software """,
+    'category': 'Productivity',
+    'website': 'https://www.odoo.com',
+    'depends': ['sale', 'maintenance'],
+    'data': ['security/ir.model.access.csv',
+             'data/data.xml',
+             'views/reception.xml',
+             'views/treatment_view.xml',
+             'views/tunnel_view.xml',
+             'views/packing_view.xml',
+             'views/stock_view.xml',
+             ],
+    'demo': [],
+    'qweb': [],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'license': 'LGPL-3',
+}

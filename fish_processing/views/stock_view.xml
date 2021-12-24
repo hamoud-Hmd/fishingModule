@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_details_lines_tree" model="ir.ui.view">
+        <field name="name">details.lines.tree</field>
+        <field name="model">details.lines</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="category"/>
+                <field name="qty"/>
+                <field name="quality"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+
+
+    <record id="action_fishing_stock" model="ir.actions.act_window">
+        <field name="name">The Stock</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">details.lines</field>
+        <field name="view_id" ref="view_stock_details_lines_tree"/>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+               The Stock
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_stock"
+              name="Stock"
+              parent="menu_fishing_root"
+              action="action_fishing_stock"
+              sequence="10"/>
+
+
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tunnel_details_lines_tree" model="ir.ui.view">
+        <field name="name">details.lines.tree</field>
+        <field name="model">details.lines</field>
+        <field name="arch" type="xml">
+            <tree create="false"  string="tunnel_tree">
+                <field name="category"/>
+                <field name="qty"/>
+                <field name="quality"/>
+                <field name="state"/>
+                <button name="action_start_tunnel" string="Start Tunnel" class="btn-primary" type="object" states="end_treatment"/>
+                <button name="action_end_tunnel" string="Validate Tunnel" class="btn-primary" type="object" states="in_tunnel"/>
+            </tree>
+
+        </field>
+    </record>
+
+
+
+
+
+    <record id="action_fishing_tunnel" model="ir.actions.act_window">
+        <field name="name">Quantities waiting tunnel</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">details.lines</field>
+        <field name="view_id" ref="view_tunnel_details_lines_tree"/>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_category':0, 'hide_quality': 0}</field>
+        <field name="domain">[('quality', '=', 'good_quality'), ('state', 'in', ['end_treatment', 'in_tunnel'])]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Quantities to be in the tunnel
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_tunnel"
+              name="Tunnel"
+              parent="menu_fishing_root"
+              action="action_fishing_tunnel"
+              sequence="10"/>
+
+
+</odoo>

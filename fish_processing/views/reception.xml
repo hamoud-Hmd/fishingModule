@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_reception_tree" model="ir.ui.view">
+        <field name="name">fishing.reception.tree</field>
+        <field name="model">fishing.reception</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="fishmonger_id"/>
+                <field name="boat_id"/>
+                <field name="date"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <record id="view_reception_form" model="ir.ui.view">
+        <field name="name">fishing.reception.form</field>
+        <field name="model">fishing.reception</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="fishmonger_id"/>
+                            <field name="boat_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details" name="details">
+                            <field name="details_line_ids">
+                                <tree editable="bottom">
+                                    <field name="category"/>
+                                    <field name="qty"/>
+                                    <field name="quality"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="category"/>
+                                        <field name="qty"/>
+                                        <field name="quality"  invisible="context.get('hide_quantity')"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Note" name="notes">
+                            <group>
+                                <field name="note"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_fishing_reception" model="ir.actions.act_window">
+        <field name="name">Reception</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fishing.reception</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Appointment!
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_fishing_root"
+              name="Fishing"
+              sequence="10"/>
+
+    <menuitem id="menu_reception"
+              name="Reception"
+              parent="menu_fishing_root"
+              action="action_fishing_reception"
+              sequence="10"/>
+
+
+</odoo>

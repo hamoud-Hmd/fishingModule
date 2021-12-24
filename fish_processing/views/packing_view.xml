@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_packing_details_lines_tree" model="ir.ui.view">
+        <field name="name">details.lines.tree</field>
+        <field name="model">details.lines</field>
+        <field name="arch" type="xml">
+            <tree create="false"  string="packing_tree">
+                <field name="category"/>
+                <field name="qty"/>
+                <field name="quality"/>
+                <field name="state"/>
+                <button name="action_start_packing" string="Start Packing" class="btn-primary" type="object"
+                attrs="{'invisible':[('state', 'not in', ('end_treatment', 'end_tunnel'))]}"/>
+                <button name="action_end_packing" string="Validate Packing" class="btn-primary" type="object" states="in_packing"/>
+            </tree>
+
+        </field>
+    </record>
+
+
+
+
+
+    <record id="action_fishing_packing" model="ir.actions.act_window">
+        <field name="name">Quantities to be packed</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">details.lines</field>
+        <field name="view_id" ref="view_packing_details_lines_tree"/>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_category':0, 'hide_quality': 0}</field>
+        <field name="domain">[('quality', '=', 'good_quality'), ('state', 'in', ['end_tunnel', 'in_packing', 'end_treatment'])]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Quantities to be packed
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_packing"
+              name="Packing"
+              parent="menu_fishing_root"
+              action="action_fishing_packing"
+              sequence="10"/>
+
+
+</odoo>
